@@ -2,6 +2,8 @@
 
 https://blog.logrocket.com/documenting-go-web-apis-with-swag/
 
+## Demo
+
 ## issues faced
 
 - Go wasn't setup properly, so swag init didnt work
@@ -17,6 +19,7 @@ https://blog.logrocket.com/documenting-go-web-apis-with-swag/
   - source https://github.com/swaggo/swag/issues/197#issuecomment-1100847754 tyvm!~
 
 - main.go doesn't recognise swaggerFiles
+
   - issue
     - `swaggerFiles "github.com/swaggo/files"` keeps getting deleted on save by gopls
   - fixes
@@ -24,3 +27,11 @@ https://blog.logrocket.com/documenting-go-web-apis-with-swag/
     - `go get -u github.com/swaggo/files`
     - then add it back in lol
     - seems to resolve it?
+
+- trying to re-order the routes doesnt work
+  - issue
+    - reordering the routes doesnt do anything
+    - apparently the operations needs to be sorted/defined
+    - need to look into how to do it
+  - fixes
+    - try another tutorial lol
