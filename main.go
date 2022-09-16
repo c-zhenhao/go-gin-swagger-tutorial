@@ -3,7 +3,12 @@ package main
 import (
 	"net/http"
 
+	_ "go-gin-swagger-tutorial/docs"
+
 	"github.com/gin-gonic/gin"
+
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 // todo represents data about a task in the todo list
@@ -24,25 +29,54 @@ var todoList = []Todo{
 	{ID: "3", Task: "Document API with swagger"},
 }
 
+// @title Go + Gin Todo API
+// @version 1.0
+// @description This is a sample server todo server. You can visit the GitHub repository at https://github.com/LordGhostX/swag-gin-demo
+
+// @contact.name API Support
+// @contact.url http://www.swagger.io/support
+// @contact.email support@swagger.io
+
+// @license.name MIT
+// @license.url https://opensource.org/licenses/MIT
+
+// @host localhost:8080
+// @BasePath /
+// @query.collection.format multi
 func main() {
 	// configure the gin server with default
 	router := gin.Default()
 
-	// regiseter getAllTodos handler to the Gin router
+	// register getAllTodos handler to the Gin router
 	router.GET("/todo", getAllTodos)
 	router.GET("/todo/:id", getTodoById)
 	router.POST("/todo", createTodo)
 	router.DELETE("/todo/:id", deleteTodo)
 	router.PATCH("/todo/:id", updateTodo)
 
+	// docs route
+	router.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+
 	// run gin server
 	router.Run("localhost:8000")
 }
 
+// @Summary get all items in the todo list
+// @ID get-all-todos
+// @Produce json
+// @Success 200 {object} Todo
+// @Router /todo [get]
 func getAllTodos(c *gin.Context) {
 	c.JSON(http.StatusOK, todoList)
 }
 
+// @Summary get a todo item by ID
+// @ID get-todo-by-id
+// @Produce json
+// @Param id path string true "todo ID"
+// @Success 200 {object} Todo
+// @Failure 404 {object} Message
+// @Router /todo/{id} [get]
 func getTodoById(c *gin.Context) {
 	// capture params from the request
 	id := c.Param("id")
@@ -58,6 +92,13 @@ func getTodoById(c *gin.Context) {
 	c.JSON(http.StatusNotFound, Message{Message: "Todo not found"})
 }
 
+// @Summary add a new item to the todo list
+// @ID create-todo
+// @Produce json
+// @Param data body Todo true "Todo data"
+// @Success 200 {object} Todo
+// @Failure 400 {object} Message
+// @Router /todo [post]
 func createTodo(c *gin.Context) {
 	// capture request body
 	var newTodo Todo
@@ -74,6 +115,13 @@ func createTodo(c *gin.Context) {
 	c.JSON(http.StatusCreated, newTodo)
 }
 
+// @Summary delete a todo item by ID
+// @ID delete-todo-by-id
+// @Produce json
+// @Param id path string true "todo ID"
+// @Success 200 {object} Todo
+// @Failure 404 {object} Message
+// @Router /todo/{id} [delete]
 func deleteTodo(c *gin.Context) {
 	// capture params from request
 	id := c.Param("id")
@@ -93,6 +141,13 @@ func deleteTodo(c *gin.Context) {
 	c.JSON(http.StatusNotFound, r)
 }
 
+// @Summary update a todo item by ID
+// @ID update-todo-by-id
+// @Produce json
+// @Param id path string true "todo ID"
+// @Success 200 {object} Todo
+// @Failure 404 {object} Message
+// @Router /todo/{id} [patch]
 func updateTodo(c *gin.Context) {
 	// capture params from request
 	id := c.Param("id")
