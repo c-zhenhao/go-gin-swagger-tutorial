@@ -115,32 +115,6 @@ func createTodo(c *gin.Context) {
 	c.JSON(http.StatusCreated, newTodo)
 }
 
-// @Summary delete a todo item by ID
-// @ID delete-todo-by-id
-// @Produce json
-// @Param id path string true "Todo ID"
-// @Success 200 {object} Todo
-// @Failure 404 {object} Message
-// @Router /todo/{id} [delete]
-func deleteTodo(c *gin.Context) {
-	// capture params from request
-	id := c.Param("id")
-
-	// loop through todoList and delete item with the ID
-	for index, todo := range todoList {
-		if todo.ID == id {
-			todoList = append(todoList[:index], todoList[index+1:]...)
-			r := Message{"Todo deleted successfully"}
-			c.JSON(http.StatusOK, r)
-			return
-		}
-	}
-
-	// return error message if todo not found
-	r := Message{"todo not found"}
-	c.JSON(http.StatusNotFound, r)
-}
-
 // @Summary update a todo item by ID
 // @ID update-todo-by-id
 // @Produce json
@@ -169,6 +143,32 @@ func updateTodo(c *gin.Context) {
 			// update the todo
 			todoList[index] = updatedTodo
 			c.JSON(http.StatusOK, updatedTodo)
+			return
+		}
+	}
+
+	// return error message if todo not found
+	r := Message{"todo not found"}
+	c.JSON(http.StatusNotFound, r)
+}
+
+// @Summary delete a todo item by ID
+// @ID delete-todo-by-id
+// @Produce json
+// @Param id path string true "Todo ID"
+// @Success 200 {object} Todo
+// @Failure 404 {object} Message
+// @Router /todo/{id} [delete]
+func deleteTodo(c *gin.Context) {
+	// capture params from request
+	id := c.Param("id")
+
+	// loop through todoList and delete item with the ID
+	for index, todo := range todoList {
+		if todo.ID == id {
+			todoList = append(todoList[:index], todoList[index+1:]...)
+			r := Message{"Todo deleted successfully"}
+			c.JSON(http.StatusOK, r)
 			return
 		}
 	}
