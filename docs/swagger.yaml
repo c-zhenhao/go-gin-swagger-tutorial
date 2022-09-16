@@ -62,7 +62,7 @@ paths:
     delete:
       operationId: delete-todo-by-id
       parameters:
-      - description: todo ID
+      - description: Todo ID
         in: path
         name: id
         required: true
@@ -82,7 +82,7 @@ paths:
     get:
       operationId: get-todo-by-id
       parameters:
-      - description: todo ID
+      - description: Todo ID
         in: path
         name: id
         required: true
@@ -102,11 +102,17 @@ paths:
     patch:
       operationId: update-todo-by-id
       parameters:
-      - description: todo ID
+      - description: Todo ID
         in: path
         name: id
         required: true
         type: string
+      - description: Todo data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/main.Todo'
       produces:
       - application/json
       responses:

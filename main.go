@@ -73,7 +73,7 @@ func getAllTodos(c *gin.Context) {
 // @Summary get a todo item by ID
 // @ID get-todo-by-id
 // @Produce json
-// @Param id path string true "todo ID"
+// @Param id path string true "Todo ID"
 // @Success 200 {object} Todo
 // @Failure 404 {object} Message
 // @Router /todo/{id} [get]
@@ -118,7 +118,7 @@ func createTodo(c *gin.Context) {
 // @Summary delete a todo item by ID
 // @ID delete-todo-by-id
 // @Produce json
-// @Param id path string true "todo ID"
+// @Param id path string true "Todo ID"
 // @Success 200 {object} Todo
 // @Failure 404 {object} Message
 // @Router /todo/{id} [delete]
@@ -144,7 +144,8 @@ func deleteTodo(c *gin.Context) {
 // @Summary update a todo item by ID
 // @ID update-todo-by-id
 // @Produce json
-// @Param id path string true "todo ID"
+// @Param id path string true "Todo ID"
+// @Param data body Todo true "Todo data"
 // @Success 200 {object} Todo
 // @Failure 404 {object} Message
 // @Router /todo/{id} [patch]
