@@ -51,8 +51,8 @@ func main() {
 	router.GET("/todo", getAllTodos)
 	router.GET("/todo/:id", getTodoById)
 	router.POST("/todo", createTodo)
-	router.DELETE("/todo/:id", deleteTodo)
 	router.PATCH("/todo/:id", updateTodo)
+	router.DELETE("/todo/:id", deleteTodo)
 
 	// docs route
 	router.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
