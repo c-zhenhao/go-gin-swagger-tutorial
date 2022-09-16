@@ -30,6 +30,7 @@ func main() {
 
 	// regiseter getAllTodos handler to the Gin router
 	router.GET("/todo", getAllTodos)
+	router.GET("/todo/:id", getTodoById)
 
 	// run gin server
 	router.Run("localhost:8000")
@@ -37,4 +38,19 @@ func main() {
 
 func getAllTodos(c *gin.Context) {
 	c.JSON(http.StatusOK, todoList)
+}
+
+func getTodoById(c *gin.Context) {
+	// capture params from the request
+	id := c.Param("id")
+
+	// loop through todolist and return item with the ID
+	for _, todo := range todoList {
+		if todo.ID == id {
+			c.JSON(http.StatusOK, todo)
+			return
+		}
+	}
+	// return error if not found
+	c.JSON(http.StatusNotFound, Message{Message: "Todo not found"})
 }
