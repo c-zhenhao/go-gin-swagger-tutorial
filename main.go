@@ -19,7 +19,7 @@ type Todo struct {
 
 // message represents request response with a message
 type Message struct {
-	Message string `json:"messasge"`
+	Message string `json:"message"`
 }
 
 // todo slice to seed todo list data
