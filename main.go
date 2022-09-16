@@ -32,6 +32,8 @@ func main() {
 	router.GET("/todo", getAllTodos)
 	router.GET("/todo/:id", getTodoById)
 	router.POST("/todo", createTodo)
+	router.DELETE("/todo/:id", deleteTodo)
+	router.PATCH("/todo/:id", updateTodo)
 
 	// run gin server
 	router.Run("localhost:8000")
@@ -70,4 +72,52 @@ func createTodo(c *gin.Context) {
 	// add the new todo to todoList
 	todoList = append(todoList, newTodo)
 	c.JSON(http.StatusCreated, newTodo)
+}
+
+func deleteTodo(c *gin.Context) {
+	// capture params from request
+	id := c.Param("id")
+
+	// loop through todoList and delete item with the ID
+	for index, todo := range todoList {
+		if todo.ID == id {
+			todoList = append(todoList[:index], todoList[index+1:]...)
+			r := Message{"Todo deleted successfully"}
+			c.JSON(http.StatusOK, r)
+			return
+		}
+	}
+
+	// return error message if todo not found
+	r := Message{"todo not found"}
+	c.JSON(http.StatusNotFound, r)
+}
+
+func updateTodo(c *gin.Context) {
+	// capture params from request
+	id := c.Param("id")
+
+	// loop through todoList and update item with the ID
+	for index, todo := range todoList {
+		if todo.ID == id {
+			// capture request body
+			var updatedTodo Todo
+
+			// bind the received JSON data to updatedTodo
+			if err := c.BindJSON(&updatedTodo); err != nil {
+				r := Message{"an error has occurred while updating todo"}
+				c.JSON(http.StatusBadRequest, r)
+				return
+			}
+
+			// update the todo
+			todoList[index] = updatedTodo
+			c.JSON(http.StatusOK, updatedTodo)
+			return
+		}
+	}
+
+	// return error message if todo not found
+	r := Message{"todo not found"}
+	c.JSON(http.StatusNotFound, r)
 }
