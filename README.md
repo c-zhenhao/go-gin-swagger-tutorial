@@ -3,6 +3,11 @@
 https://blog.logrocket.com/documenting-go-web-apis-with-swag/
 
 ## Demo
+- Create and Read
+https://user-images.githubusercontent.com/16322250/190625180-27e346a1-a7b5-4e40-8a2c-d714d0ebac1f.mov
+
+- Update and Delete
+https://user-images.githubusercontent.com/16322250/190625314-d00c4f59-6fee-44cb-9c6b-34040b17cc78.mov
 
 ## issues faced
 
