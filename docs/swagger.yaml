@@ -2,7 +2,7 @@ basePath: /
 definitions:
   main.Message:
     properties:
-      messasge:
+      message:
         type: string
     type: object
   main.Todo:

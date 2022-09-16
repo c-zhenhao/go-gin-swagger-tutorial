@@ -179,7 +179,7 @@ const docTemplate = `{
         "main.Message": {
             "type": "object",
             "properties": {
-                "messasge": {
+                "message": {
                     "type": "string"
                 }
             }
